@@ -372,6 +372,6 @@ public virtual DateTimeModel GetTime()
 ![](https://images.cnblogs.com/cnblogs_com/king-23100/1543322/o_1911140259397339ab91a4f8cfd928ed1003f323b7d.png)
 
 #### 相关链接
-- [GitHub:本文代码](https://github.com/2310010783/Demo.Aop.AspectCore)
+- [GitHub:本文代码](https://github.com/2310010783/Demo.Cache.AopCache)
 - [GitHub:EasyCaching](https://github.com/dotnetcore/EasyCaching)
 - [官方文档:EasyCaching](https://easycaching.readthedocs.io/en/latest/)
