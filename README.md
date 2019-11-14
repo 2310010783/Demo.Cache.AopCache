@@ -138,6 +138,8 @@ public static class KeyGenerator
 
 ### 写一套缓存拦截器
 - CacheAbleAttribute
+
+Attribute中保存缓存的策略信息，包括过期时间，Key值前缀等信息，在使用缓存时可以对这些选项值进行配置。
 ```C#
 public class CacheAbleAttribute : Attribute
 {
@@ -164,6 +166,9 @@ public class CacheAbleAttribute : Attribute
 ```
 
 - CacheAbleInterceptor
+
+接下来就是重头戏，拦截器中的逻辑就相对于缓存的相关策略，不用的策略可以分成不同的拦截器。
+这里的逻辑参考了EasyCaching的源码，并加入了Redis分布式锁的应用。
 ```C#
 public class CacheAbleInterceptor : AbstractInterceptor
 {
@@ -329,6 +334,9 @@ public class CacheAbleInterceptor : AbstractInterceptor
 ```
 
 - 注册拦截器
+
+在AspectCore中注册CacheAbleInterceptor拦截器，这里直接注册了用于测试的DemoService，
+在正式项目中，打算用反射注册需要用到缓存的Service或者Method。
 ```C#
 public static class AspectCoreExtensions
 {
@@ -345,6 +353,8 @@ public static class AspectCoreExtensions
 
 ### 测试缓存功能
 - 在需要缓存的接口/方法上标注Attribute
+
+
 ```C#
 [CacheAble(CacheKeyPrefix = "test", Expiration = 30, OnceUpdate = true)]
 public virtual DateTimeModel GetTime()
@@ -358,4 +368,10 @@ public virtual DateTimeModel GetTime()
 ```
 - 测试结果截图
 
+请求接口，返回时间，并将返回结果缓存到Redis中，保留300秒后过期。
 ![](https://images.cnblogs.com/cnblogs_com/king-23100/1543322/o_1911140259397339ab91a4f8cfd928ed1003f323b7d.png)
+
+#### 相关链接
+- [GitHub:本文代码](https://github.com/2310010783/Demo.Aop.AspectCore)
+- [GitHub:EasyCaching](https://github.com/dotnetcore/EasyCaching)
+- [官方文档:EasyCaching](https://easycaching.readthedocs.io/en/latest/)
